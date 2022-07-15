@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body id="body1">
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+<script type="text/javascript">
+
+    //遍历map返回json对象
+    const mapChangeObj = (map) => {
+        let obj = {};
+        for (let [k, v] of map) {
+            obj[k] = v;
+        }
+        return obj;
+    };
+
+    //工厂模式创建对象
+    function createObj(
+        id,
+        dimensionType,
+        dimensionCode,
+        dimensionName,
+        defaultQueryValue,
+        dimensionDesc,
+        createUserId,
+        updateUserId,
+        createTime,
+        updateTime
+    ) {
+        var o = new Object();
+        o.id = id;
+        o.dimensionType = dimensionType;
+        o.dimensionCode = dimensionCode;
+        o.dimensionName = dimensionName;
+        o.defaultQueryValue = defaultQueryValue;
+        o.dimensionDesc = dimensionDesc;
+        o.createUserId = createUserId;
+        o.updateUserId = updateUserId;
+        o.createTime = createTime;
+        o.updateTime = updateTime;
+        return o;
+    }
+
+    let dimension = createObj(
+        '309534692782149',
+        '03',
+        '2342342',
+        '维度名称',
+        '默认查询值',
+        '维度描述',
+        '创建人id',
+        '更新人id',
+        '2022-06-29 17:38:10',
+        '2022-06-29 17:38:10'
+    );
+
+    //遍历打印工厂模式创建的对象属性和值
+    function consoleObj(obj) {
+        let str = '';
+        for (var item in obj) {
+            str += item + ':' + obj[item] + '\n';
+        }
+        console.log(str);
+    }
+
+    //调用遍历打印
+    consoleObj(dimension);
+
+    //创建map
+    let mapObj = new Map([
+        ['id', 95],
+        ['mappingAssetsPath', 'C://System//Windows/....'],
+        ['cvCatalogueId', 85],
+        ["isMapping", false]
+    ]);
+
+    //创建map元素，添加到listObj中
+    //元素1
+    let mapToListObj1 = new Map([
+        ['id', 1101],
+        ['cvCatalogueId', 11],
+        ['cvCode', 01],
+        ['cvValue', '列表维度'],
+        ['cvParentId', '282174972'],
+        ['cvDesc', '码值表描述'],
+        ['enabled', 1]
+    ]);
+    //元素2
+    let mapToListObj2 = new Map([
+        ['id', 1102],
+        ['cvCatalogueId', 12],
+        ['cvCode', 03],
+        ['cvValue', '文本维度'],
+        ['cvParentId', ''],
+        ['cvDesc', '码值表描述1'],
+        ['enabled', 0]
+    ]);
+
+    //创建list
+    let listObj = [mapChangeObj(mapToListObj1), mapChangeObj(mapToListObj2)];
+
+    //汇总的map
+    let mapListObj = new Map([
+        ['dmDimension', dimension],
+        ['mappingMap', mapChangeObj(mapObj)],
+        ['mdCodeValueList', listObj]
+    ]);
+    //汇总map转json对象
+    let jsonObj = mapChangeObj(mapListObj);
+    console.log(jsonObj);
+    //jsonObj转json字符串
+    console.log(JSON.stringify(jsonObj));
+
+    $.ajax({
+        type: "POST", //请求方式
+        url: '/test/dhdata',//后端API
+        data: JSON.stringify(jsonObj), //向后台提交的数据
+        async: true, //异步请求
+        contentType: "application/json",   //设置Content-Type请求头
+        dataType: "json", //规定请求成功后返回的数据类型
+        //请求成功之后进入该方法，json为成功后返回的数据
+        success: function (json) {
+           $('#body1').text(json.message);
+            alert(json.message);
+        },
+        error: function (errorMsg) {
+            //请求失败之后进入该方法，errorMsg为失败后返回的错误信息
+        }
+    })
+</script>
+</body>
+</html>

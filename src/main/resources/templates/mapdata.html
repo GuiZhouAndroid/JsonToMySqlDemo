@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+<script type="text/javascript">
+    $.ajax({
+        type: "POST", //请求方式
+        url: '/test/mapdata',//后端API
+        data: JSON.stringify({
+            "key1": {
+                "name": "对象1",
+                "age": 24
+            },
+            "key2": {
+                "name": "对象2",
+                "age": 24
+            }
+        }), //发生目标数据
+        async: true, //异步请求
+        contentType: "application/json",   //设置Content-Type请求头
+        dataType: "json", //数据类型
+        // 程序响应回来之后，对于客户端来说要拿到响应的数据，然后解析这个数据，展示到页面上。
+        success: function (json) {
+            alert(json.code+"=="+json.msg);
+        }
+    })
+</script>
+</body>
+</html>

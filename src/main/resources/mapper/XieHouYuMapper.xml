@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.XieHouYuMapper">
+    <!--  歇后语添加  -->
+    <!--    <insert id="insertXieHouYu" parameterType="com.example.demo.entity.XieHouYuBean" >-->
+    <!--        insert into xiehouyu( xhy_riddle, xhy_answer)-->
+    <!--        values (#{xhyBean.xhy_riddle}, #{xhyBean.xhy_answer});-->
+    <!--    </insert>   -->
+    <insert id="batchInsertXieHouYu" parameterType="com.example.demo.entity.XieHouYuBean">
+        insert into xiehouyu(xhy_riddle, xhy_answer)
+        values
+        <foreach collection="xieHouYuBeanList" item="sync" separator=",">
+            (
+            #{sync.xhy_riddle},
+            #{sync.xhy_answer}
+            )
+        </foreach>
+    </insert>
+    <!--  歇后语谜底查询对应答案  -->
+    <select id="selectXieHouYu" resultType="java.lang.String">
+        select xhy_answer
+        from xiehouyu
+        where xhy_riddle = #{xhyRiddle}
+    </select>
+</mapper>

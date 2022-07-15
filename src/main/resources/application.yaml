@@ -1,0 +1,36 @@
+spring:
+  # thymeleaf模板引擎配置否：关闭缓存并刷新页面
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: utf-8
+    mode: html5
+    servlet:
+      content-type: text/html
+
+  # 配置数据库连接
+  datasource:
+    name: dictionary  #数据库名
+    url: jdbc:mysql://localhost:3306/dictionary?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC #url
+    username: root  #用户名
+    password: root  #密码
+    driver-class-name: com.mysql.cj.jdbc.Driver  #数据库链接驱动
+
+# Mybatis-Plus 数据库框架
+mybatis:
+  mapper-locations: classpath*:mapper/**/*Mapper.xml # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  type-aliases-package: com.example.demo.entity # 搜索指定包别名---配置实体类
+  #  config-location: classpath:mybatis-config.xml  # 加载全局参数配置文件，config-location不能与configuration同时使用，否则会报错
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 日志输出到控制台,，定MyBatis所用日志的具体实现
+    cache-enabled: false # 关闭缓存，全局性地开启或关闭所有映射器配置文件中已配置的任何缓存，默认值为true
+    map-underscore-to-camel-case: true # 全局性地开启或关闭所有映射器配置文件中已配置的任何驼峰命名规则，默认值为false
+    auto-mapping-behavior: full # 指定MyBatis应该如何自动映射列到字段或属性,默认值为PARTIAL（属性类型有：NONE, PARTIAL, FULL）NONE：表示关闭自动映射、PARTIAL：只会自动映射没有定义嵌套结果映射的字段、FULL：会自动映射任何复杂的结果集（无论是否嵌套）
+    use-generated-keys: false # 指定是否使用自增主键，默认值为false
+    default-executor-type: reuse # 指定MyBatis的默认执行器类型，默认值为REUSE（重用）、BATCH（批量）、SIMPLE（简单）、CUSTOMIZE（自定义）
+    default-fetch-size: 100 # 指定MyBatis的默认查询结果集大小，默认值为100 （每次查询结果集的最大行数）设置较大的fetchsize，对性能会有很大的提升，Fetchsize设置大于返回的记录数时，对于性能的提升没有任何的意义，反而会增加内存的开销，导致内存溢出，请根据实际情况设置。
+
+# 服务器端口号
+server:
+  port: 8085

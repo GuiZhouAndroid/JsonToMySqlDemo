@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+<script type="text/javascript">
+    let params = new FormData();
+    params.append('x', JSON.stringify({
+        "a": "abc",
+        "b": 123
+    }));
+    params.append('y', JSON.stringify({
+        "a": "qwe",
+        "b": 234
+    }));
+    $.ajax({
+        type: "POST", //请求方式
+        url: '/test/formdata',//后端API
+        data: params, //发生目标数据
+        async: true, //异步请求
+        processData: false,   //不处理发送的数据
+        contentType: false,   //不设置Content-Type请求头
+        dataType: "json", //数据类型
+        // 程序响应回来之后，对于客户端来说要拿到响应的数据，然后解析这个数据，展示到页面上。
+        success: function (json) {
+            alert(json.code+"=="+json.msg);
+        }
+    })
+</script>
+</body>
+</html>
