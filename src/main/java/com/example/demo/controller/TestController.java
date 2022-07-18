@@ -26,11 +26,17 @@ public class TestController {
      * 单个实体+数组多个实体+单个属性
      */
     @PostMapping(value = "/test/formdata", produces = "application/json;charset=UTF-8")
-    public void testFormData(@RequestPart DmDimension dmDimension, @RequestPart MdCodeValueMapping mapping, @RequestPart List<MdCodeValue> mdCodeValueList, @RequestParam Boolean isMapping) {
+    public String testFormData(@RequestPart DmDimension dmDimension, @RequestPart MdCodeValueMapping mapping, @RequestPart List<MdCodeValue> mdCodeValueList, @RequestParam Boolean isMapping) {
         System.out.println("dmDimension===" + dmDimension);
         System.out.println("mdCodeValueList===" + mdCodeValueList);
         System.out.println("mapping===" + mapping);
         System.out.println("isMapping===" + isMapping);
+        return JSONUtil.toJsonStr(new HashMap<String, Object>(){{
+            put("dmDimension", dmDimension);
+            put("mapping", mapping);
+            put("mdCodeValueList", mdCodeValueList.get(0));
+            put("isMapping", isMapping);
+        }});
     }
 
     /**

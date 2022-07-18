@@ -126,7 +126,7 @@
         dataType: "json", //数据类型
         // 程序响应回来之后，对于客户端来说要拿到响应的数据，然后解析这个数据，展示到页面上。
         success: function (json) {
-            alert(json.code+"=="+json.msg);
+            alert(json.dmDimension.dimensionName+'\n'+json.mapping.mappingAssetsPath+'\n'+json.mdCodeValueList.cvValue+'\n'+json.isMapping);
         }
     })
 </script>
