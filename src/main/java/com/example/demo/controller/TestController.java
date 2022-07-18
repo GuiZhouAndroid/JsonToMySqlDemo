@@ -1,12 +1,13 @@
 package com.example.demo.controller;
 
 import cn.hutool.json.JSONUtil;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.demo.entity.DmDimension;
+import com.example.demo.entity.MdCodeValue;
+import com.example.demo.entity.MdCodeValueMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,13 +22,15 @@ import java.util.Map;
 public class TestController {
 
     /**
-     * @param x 前端表单提交传递的数据实体x
-     * @param y 前端表单提交传递的数据实体y
+     * 前端表单提交传递的数据实体
+     * 单个实体+数组多个实体+单个属性
      */
-    @PostMapping(value = "/test/formdata", produces = "application/json")
-    public void testFormData(@RequestPart String x, String y) {
-        System.out.println("x" + x);
-        System.out.println("y" + y);
+    @PostMapping(value = "/test/formdata", produces = "application/json;charset=UTF-8")
+    public void testFormData(@RequestPart DmDimension dmDimension, @RequestPart MdCodeValueMapping mapping, @RequestPart List<MdCodeValue> mdCodeValueList, @RequestParam Boolean isMapping) {
+        System.out.println("dmDimension===" + dmDimension);
+        System.out.println("mdCodeValueList===" + mdCodeValueList);
+        System.out.println("mapping===" + mapping);
+        System.out.println("isMapping===" + isMapping);
     }
 
     /**

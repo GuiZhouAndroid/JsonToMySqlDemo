@@ -7,15 +7,115 @@
 <body>
 <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
 <script type="text/javascript">
+    //遍历map返回json对象
+    const mapChangeObj = (map) => {
+        let obj = {};
+        for (let [k, v] of map) {
+            obj[k] = v;
+        }
+        return obj;
+    };
+
+    //工厂模式创建对象
+    function createObj(
+        id,
+        dimensionType,
+        dimensionCode,
+        dimensionName,
+        defaultQueryValue,
+        dimensionDesc,
+        createUserId,
+        updateUserId,
+        createTime,
+        updateTime
+    ) {
+        var o = new Object();
+        o.id = id;
+        o.dimensionType = dimensionType;
+        o.dimensionCode = dimensionCode;
+        o.dimensionName = dimensionName;
+        o.defaultQueryValue = defaultQueryValue;
+        o.dimensionDesc = dimensionDesc;
+        o.createUserId = createUserId;
+        o.updateUserId = updateUserId;
+        o.createTime = createTime;
+        o.updateTime = updateTime;
+        return o;
+    }
+
+    let dimension = createObj(
+        '309534692782149',
+        '03',
+        '2342342',
+        '维度名称',
+        '默认查询值',
+        '维度描述',
+        '创建人id',
+        '更新人id',
+        '2022-06-29 17:38:10',
+        '2022-06-29 17:38:10'
+    );
+    let mapping = {
+        "id": "95",
+        "mappingAssetsPath": "C://System//Windows/....",
+        "cvCatalogueId": "85",
+        "isMapping": false
+    };
+
+    //遍历打印工厂模式创建的对象属性和值
+    function consoleObj(obj) {
+        let str = '';
+        for (var item in obj) {
+            str += item + ':' + obj[item] + '\n';
+        }
+        console.log(str);
+    }
+
+    //调用遍历打印
+    consoleObj(dimension);
+
+
+    //创建map元素，添加到listObj中
+    //元素1
+    let mapToListObj1 = new Map([
+        ['id', 1101],
+        ['cvCatalogueId', 11],
+        ['cvCode', 01],
+        ['cvValue', '列表维度'],
+        ['cvParentId', '282174972'],
+        ['cvDesc', '码值表描述'],
+        ['enabled', 1]
+    ]);
+    //元素2
+    let mapToListObj2 = new Map([
+        ['id', 1102],
+        ['cvCatalogueId', 12],
+        ['cvCode', 03],
+        ['cvValue', '文本维度'],
+        ['cvParentId', ''],
+        ['cvDesc', '码值表描述1'],
+        ['enabled', 0]
+    ]);
+
+    //创建list
+    let listObj = [mapChangeObj(mapToListObj1), mapChangeObj(mapToListObj2)];
+
+
+    console.log(listObj);
+    //jsonObj转json字符串
+    console.log(JSON.stringify(listObj));
+
     let params = new FormData();
-    params.append('x', JSON.stringify({
-        "a": "abc",
-        "b": 123
+    params.append('dmDimension', new Blob([JSON.stringify(dimension)], {
+        "type": "application/json"
     }));
-    params.append('y', JSON.stringify({
-        "a": "qwe",
-        "b": 234
+    params.append('mapping', new Blob([JSON.stringify(mapping)], {
+        "type": "application/json"
     }));
+    params.append('mdCodeValueList',new Blob([JSON.stringify(listObj)], {
+        "type": "application/json"
+    }));
+    params.append('isMapping', true);
     $.ajax({
         type: "POST", //请求方式
         url: '/test/formdata',//后端API

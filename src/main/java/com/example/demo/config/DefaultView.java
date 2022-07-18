@@ -22,7 +22,8 @@ public class DefaultView extends WebMvcConfigurerAdapter {
         // reg.addViewController("/").setViewName("formdata");//默认访问页面
         // reg.addViewController("/").setViewName("mapdata");
         //reg.addViewController("/").setViewName("dhdata");
-        reg.addViewController("/").setViewName("xiehouyu");
+        //reg.addViewController("/").setViewName("xiehouyu");
+        reg.addViewController("/").setViewName("formdata");
         reg.setOrder(Ordered.HIGHEST_PRECEDENCE);//最先执行过滤
         super.addViewControllers(reg);
     }
